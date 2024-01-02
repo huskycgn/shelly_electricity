@@ -1,6 +1,7 @@
 from cred import SHELLY_API_KEY
 import requests
 
+
 class Room:
     def __init__(self, name, dbtable, shellydeviceid):
         self.name = name

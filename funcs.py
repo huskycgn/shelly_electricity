@@ -4,7 +4,6 @@ import mariadb
 
 
 def getutc():
-    print(datetime.utcnow())
     return datetime.utcnow()
 
 

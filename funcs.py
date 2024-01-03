@@ -8,8 +8,8 @@ def getutc():
 
 
 def write_energydb(table, con) -> None:
-    """Accepts and executes SQL Statements
-    :param statement:
+    """Executes SQL statements
+    :param table, con:
     :return:
     """
     connection = mariadb.connect(

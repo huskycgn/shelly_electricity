@@ -16,7 +16,7 @@ ROOMS = {"room1":
          "room2": {
              "dbtable": "room2_db",
              "shellydeviceid": "IDoftheshellydevice"},
-             "kuehlschrank": {
-                 "dbtable": "kuehlschrank",
+             "room3": {
+                 "dbtable": "room3_db",
                  "shellydeviceid": "IDoftheshellydevice"
              }}

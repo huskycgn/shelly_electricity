@@ -45,5 +45,3 @@ def get_tibber():
                          user_agent="UserAgent/0.0.1")
     return cons
 
-
-print(get_tibber())

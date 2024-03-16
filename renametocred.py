@@ -4,6 +4,7 @@ db_name = 'dbname'
 db_user = 'yourDBuser'
 db_pass = 'yourdbpass'
 SHELLY_API_KEY = 'yourshellyAPIKEY'
+TIBBER_API_KEY = 'yourTibberKEy'
 
 # You can get the shelly device IDs from their cloud service
 # under device information.

@@ -1,6 +1,6 @@
 from datetime import datetime
 from cred import db_host, db_name, db_user, db_pass, TIBBER_API_KEY
-import mariadb
+import psycopg2
 import tibber
 
 
@@ -13,7 +13,7 @@ def write_energydb(table, con) -> None:
     :param table, con:
     :return:
     """
-    connection = mariadb.connect(
+    connection = psycopg2.connect(
         host=db_host, user=db_user, password=db_pass, database=db_name
     )
     statement = f"INSERT INTO {table} (time, consumption) VALUES('{getutc()}', {con});"
@@ -44,4 +44,3 @@ def get_tibber():
     home.start_live_feed(exit_condition=my_exit_function,
                          user_agent="UserAgent/0.0.1")
     return cons
-

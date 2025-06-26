@@ -3,20 +3,14 @@ import requests
 
 
 class Room:
-    def __init__(self, name, dbtable, shellydeviceid):
+    def __init__(self, name, dbtable, ipaddress):
         self.name = name
         self.dbtable = dbtable
-        self.shellydeviceid = shellydeviceid
-        self.consumption = self.get_shelly()
+        self.ipaddress = ipaddress
+        self.consumption = self.get_shelly_lan()
 
-    def get_shelly(self):
-        api_key = SHELLY_API_KEY
-        parameters = {"id": self.shellydeviceid, "auth_key": api_key}
-
-        base_url = "https://shelly-77-eu.shelly.cloud/device/status"
-
-        response = requests.get(url=base_url, params=parameters)
+    def get_shelly_lan(self):
+        base_url = f"http://{self.ipaddress}/rpc/Switch.GetStatus?id=0"
+        response = requests.get(url=base_url)
         json_data = response.json()
-        # print(json_data)
-        consumption = float(json_data["data"]["device_status"]["switch:0"]["apower"])
-        return consumption
+        return json_data["apower"]

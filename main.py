@@ -6,7 +6,7 @@ roomlist = []
 
 
 for i in ROOMS:
-    r = Room(name=i, dbtable=ROOMS[i]["dbtable"], shellydeviceid=ROOMS[i]["shellydeviceid"])
+    r = Room(name=i, dbtable=ROOMS[i]["dbtable"], ipaddress=ROOMS[i]["ipaddress"])
     roomlist.append(r)
 
 for ro in roomlist:

@@ -13,11 +13,11 @@ TIBBER_API_KEY = 'yourTibberKEy'
 
 ROOMS = {"room1":
              {"dbtable": "room1_db",
-              "shellydeviceid": "IDoftheshellydevice"},
+              "ipaddress": "IPoftheshellydevice"},
          "room2": {
              "dbtable": "room2_db",
-             "shellydeviceid": "IDoftheshellydevice"},
+             "ipaddress": "IPoftheshellydevice"},
              "room3": {
                  "dbtable": "room3_db",
-                 "shellydeviceid": "IDoftheshellydevice"
+                 "ipaddress": "IPoftheshellydevice"
              }}

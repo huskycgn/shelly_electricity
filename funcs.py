@@ -1,11 +1,11 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from cred import db_host, db_name, db_user, db_pass, TIBBER_API_KEY
 import psycopg2
 import tibber
 
 
 def getutc():
-    return datetime.utcnow()
+    return datetime.now(timezone.utc)
 
 
 def write_energydb(table, con) -> None:

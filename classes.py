@@ -14,6 +14,7 @@ class Room:
             base_url = f"http://{self.ipaddress}/rpc/Switch.GetStatus?id=0"
             response = requests.get(url=base_url)
             json_data = response.json()
+            print(json_data["apower"])
         except:
             return 0
         return json_data["apower"]

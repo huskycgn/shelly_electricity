@@ -1,5 +1,6 @@
-from cred import SHELLY_API_KEY
 import requests
+from requests.auth import HTTPDigestAuth
+from cred import SHELLY_WEB_USER, SHELLY_WEB_PASS
 
 
 class Room:
@@ -12,7 +13,8 @@ class Room:
     def get_shelly_lan(self):
         try:
             base_url = f"http://{self.ipaddress}/rpc/Switch.GetStatus?id=0"
-            response = requests.get(url=base_url)
+            response = requests.get(url=base_url, auth=HTTPDigestAuth(SHELLY_WEB_USER, SHELLY_WEB_PASS))
+            # response = requests.get(url=base_url)
             json_data = response.json()
             print(json_data["apower"])
         except:

@@ -10,6 +10,7 @@ def getutc():
 
 def write_energydb(table, con) -> None:
     """Executes SQL statements
+    :param table:
     :param table, con:
     :return:
     """

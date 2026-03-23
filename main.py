@@ -13,6 +13,4 @@ for ro in roomlist:
     write_energydb(ro.dbtable, ro.consumption)
 
 
-get_tibber()
-
 write_energydb("smartmeter", get_tibber())

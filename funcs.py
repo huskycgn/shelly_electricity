@@ -44,4 +44,5 @@ def get_tibber():
     # Now start retrieving live measurements
     home.start_live_feed(exit_condition=my_exit_function,
                          user_agent="UserAgent/0.0.1")
+    print(f"Tibber {cons}")
     return cons

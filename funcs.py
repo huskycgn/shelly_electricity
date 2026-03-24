@@ -5,6 +5,21 @@ import tibber
 
 from cred import db_host, db_name, db_user, db_pass, TIBBER_API_KEY
 
+import aiohttp
+import asyncio
+
+# Wir patchen den Standard-Timeout für ALLE aiohttp-Sessions
+# Das zwingt die tibber-Library zu mehr Geduld
+class ForceTimeout(aiohttp.ClientSession):
+    def __init__(self, *args, **kwargs):
+        if 'timeout' not in kwargs:
+            kwargs['timeout'] = aiohttp.ClientTimeout(total=60, connect=30)
+        super().__init__(*args, **kwargs)
+
+# Wir "mogeln" der Library unsere geduldige Session unter
+aiohttp.ClientSession = ForceTimeout
+
+
 
 def getutc():
     return datetime.now(timezone.utc)

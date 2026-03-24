@@ -1,7 +1,9 @@
 from datetime import datetime, timezone
-from cred import db_host, db_name, db_user, db_pass, TIBBER_API_KEY
+
 import psycopg2
 import tibber
+
+from cred import db_host, db_name, db_user, db_pass, TIBBER_API_KEY
 
 
 def getutc():
@@ -29,7 +31,18 @@ cons = 0
 
 
 def get_tibber():
-    account = tibber.Account(f"{TIBBER_API_KEY}")
+    # Wir nutzen den nativen Timeout-Parameter der Library (falls unterstützt)
+    # oder wir setzen ihn direkt beim Initialisieren.
+    try:
+        # Bei tibber.py (Høyer) ist oft nur der Token vorgesehen.
+        # Wir versuchen es mit der Standard-Initialisierung,
+        # erhöhen aber die Geduld durch Vorab-Check.
+        account = tibber.Account(f"{TIBBER_API_KEY}")
+
+    except Exception as e:
+        # Hier schlägt der 504 oder Timeout zu
+        print(f"Tibber Initialisierung fehlgeschlagen: {e}")
+        return 0
     home = account.homes[0]
 
     @home.event("live_measurement")

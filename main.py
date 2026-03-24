@@ -1,6 +1,9 @@
 from classes import Room
 from cred import ROOMS
 from funcs import write_energydb, get_tibber
+import time
+
+start_time = time.time()
 
 write_energydb("smartmeter", get_tibber())
 
@@ -12,3 +15,6 @@ for i in ROOMS:
 
 for ro in roomlist:
     write_energydb(ro.dbtable, ro.consumption)
+
+end_time = time.time()
+print(f"Elapsed time: {end_time - start_time:.2f} seconds")

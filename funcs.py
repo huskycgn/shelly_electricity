@@ -8,6 +8,21 @@ from cred import db_host, db_name, db_user, db_pass, TIBBER_API_KEY
 import aiohttp
 import asyncio
 
+
+import socket
+
+# --- IPv4-ONLY PATCH START ---
+orig_getaddrinfo = socket.getaddrinfo
+
+def patched_getaddrinfo(*args, **kwargs):
+    responses = orig_getaddrinfo(*args, **kwargs)
+    # Filtert alle IPv6 (AF_INET6) Adressen gnadenlos aus
+    return [res for res in responses if res[0] == socket.AF_INET]
+
+socket.getaddrinfo = patched_getaddrinfo
+# --- IPv4-ONLY PATCH END ---
+
+
 # Wir patchen den Standard-Timeout für ALLE aiohttp-Sessions
 # Das zwingt die tibber-Library zu mehr Geduld
 class ForceTimeout(aiohttp.ClientSession):

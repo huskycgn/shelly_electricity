@@ -3,7 +3,10 @@ from cred import ROOMS
 from funcs import write_energydb, get_tibber
 import time
 
-time.sleep(15)
+SLEEP_TIMER = 20
+
+print(f"Sleep for {SLEEP_TIMER} seconds")
+time.sleep(SLEEP_TIMER)
 # 15 Sekunden warten, um API-Sturm zur genauen Viertelstunde zu umgehen
 
 start_time = time.time()

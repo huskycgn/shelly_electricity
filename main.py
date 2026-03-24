@@ -2,8 +2,9 @@ from classes import Room
 from cred import ROOMS
 from funcs import write_energydb, get_tibber
 
-roomlist = []
+write_energydb("smartmeter", get_tibber())
 
+roomlist = []
 
 for i in ROOMS:
     r = Room(name=i, dbtable=ROOMS[i]["dbtable"], ipaddress=ROOMS[i]["ipaddress"])
@@ -11,6 +12,3 @@ for i in ROOMS:
 
 for ro in roomlist:
     write_energydb(ro.dbtable, ro.consumption)
-
-
-write_energydb("smartmeter", get_tibber())

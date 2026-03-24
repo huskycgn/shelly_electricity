@@ -3,6 +3,9 @@ from cred import ROOMS
 from funcs import write_energydb, get_tibber
 import time
 
+time.sleep(15)
+# 15 Sekunden warten, um API-Sturm zur genauen Viertelstunde zu umgehen
+
 start_time = time.time()
 
 write_energydb("smartmeter", get_tibber())

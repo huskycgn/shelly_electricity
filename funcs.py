@@ -31,31 +31,37 @@ cons = 0
 
 
 def get_tibber():
-    # Wir nutzen den nativen Timeout-Parameter der Library (falls unterstützt)
-    # oder wir setzen ihn direkt beim Initialisieren.
+    global cons
+    cons = 0
+
     try:
-        # Bei tibber.py (Høyer) ist oft nur der Token vorgesehen.
-        # Wir versuchen es mit der Standard-Initialisierung,
-        # erhöhen aber die Geduld durch Vorab-Check.
+        # 1. Account initialisieren
         account = tibber.Account(f"{TIBBER_API_KEY}")
 
+        # 2. Prüfen, ob Häuser vorhanden sind (Sicherheitscheck)
+        if not account.homes:
+            print("Fehler: Keine Häuser im Tibber-Account gefunden oder API-Timeout bei der Abfrage.")
+            return 0
+
+        home = account.homes[0]
+
+        # 3. Listener registrieren BEVOR der Feed startet
+        @home.event("live_measurement")
+        async def process_data(data):
+            global cons
+            if data and data.power:
+                cons = data.power
+
+        def my_exit_function(live_measurement_data):
+            return live_measurement_data is not None and live_measurement_data.power > 0
+
+        # 4. Feed starten
+        home.start_live_feed(exit_condition=my_exit_function,
+                             user_agent="UserAgent/0.0.1")
+
+        print(f"Tibber {cons}")
+        return cons
+
     except Exception as e:
-        # Hier schlägt der 504 oder Timeout zu
-        print(f"Tibber Initialisierung fehlgeschlagen: {e}")
+        print(f"Kritischer Fehler in get_tibber: {e}")
         return 0
-    home = account.homes[0]
-
-    @home.event("live_measurement")
-    async def process_data(data):
-        pass
-
-    def my_exit_function(live_measurement_data):
-        global cons
-        cons = live_measurement_data.power
-        return cons != 0
-
-    # Now start retrieving live measurements
-    home.start_live_feed(exit_condition=my_exit_function,
-                         user_agent="UserAgent/0.0.1")
-    print(f"Tibber {cons}")
-    return cons

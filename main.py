@@ -24,3 +24,4 @@ for ro in roomlist:
 
 end_time = time.time()
 print(f"Elapsed time: {end_time - start_time:.2f} seconds")
+print(f"Execution time: {end_time}")

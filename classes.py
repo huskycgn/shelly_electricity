@@ -16,7 +16,7 @@ class Room:
             response = requests.get(url=base_url, auth=HTTPDigestAuth(SHELLY_WEB_USER, SHELLY_WEB_PASS))
             # response = requests.get(url=base_url)
             json_data = response.json()
-            print(self.name, json_data["apower"])
+            print(f"{self.name} {json_data["apower"]} Watt")
         except:
             return 0
         return json_data["apower"]

@@ -14,10 +14,12 @@ import socket
 # --- IPv4-ONLY PATCH START ---
 orig_getaddrinfo = socket.getaddrinfo
 
+
 def patched_getaddrinfo(*args, **kwargs):
     responses = orig_getaddrinfo(*args, **kwargs)
     # Filtert alle IPv6 (AF_INET6) Adressen gnadenlos aus
     return [res for res in responses if res[0] == socket.AF_INET]
+
 
 socket.getaddrinfo = patched_getaddrinfo
 # --- IPv4-ONLY PATCH END ---
@@ -27,13 +29,13 @@ socket.getaddrinfo = patched_getaddrinfo
 # Das zwingt die tibber-Library zu mehr Geduld
 class ForceTimeout(aiohttp.ClientSession):
     def __init__(self, *args, **kwargs):
-        if 'timeout' not in kwargs:
-            kwargs['timeout'] = aiohttp.ClientTimeout(total=60, connect=30)
+        if "timeout" not in kwargs:
+            kwargs["timeout"] = aiohttp.ClientTimeout(total=60, connect=30)
         super().__init__(*args, **kwargs)
+
 
 # Wir "mogeln" der Library unsere geduldige Session unter
 aiohttp.ClientSession = ForceTimeout
-
 
 
 def getutc():
@@ -70,7 +72,9 @@ def get_tibber():
 
         # 2. Prüfen, ob Häuser vorhanden sind (Sicherheitscheck)
         if not account.homes:
-            print("Fehler: Keine Häuser im Tibber-Account gefunden oder API-Timeout bei der Abfrage.")
+            print(
+                "Fehler: Keine Häuser im Tibber-Account gefunden oder API-Timeout bei der Abfrage."
+            )
             return 0
 
         home = account.homes[0]
@@ -86,8 +90,9 @@ def get_tibber():
             return live_measurement_data is not None and live_measurement_data.power > 0
 
         # 4. Feed starten
-        home.start_live_feed(exit_condition=my_exit_function,
-                             user_agent="UserAgent/0.0.1")
+        home.start_live_feed(
+            exit_condition=my_exit_function, user_agent="UserAgent/0.0.1"
+        )
 
         print(f"Tibber {cons} Watt")
         return cons

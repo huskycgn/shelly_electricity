@@ -3,7 +3,7 @@ from cred import ROOMS
 from funcs import write_energydb, get_tibber
 import time
 
-SLEEP_TIMER = 40
+SLEEP_TIMER = 45
 
 print(f"Sleep for {SLEEP_TIMER} seconds")
 time.sleep(SLEEP_TIMER)
